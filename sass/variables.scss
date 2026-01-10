@@ -1,0 +1,11 @@
+$gap:(
+  xs:0.25rem,
+  s: 0.5rem,
+  m:1rem,
+  l:1.5rem,
+  xl:2rem
+);
+
+@function gap($size) {
+  @return map-get($gap, $size);
+}

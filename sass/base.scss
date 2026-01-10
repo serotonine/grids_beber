@@ -1,0 +1,30 @@
+html * {
+  box-sizing: border-box;
+}
+body,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  
+  // Font.
+  font-family: "Arimo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@for $i from 1 through 6 {
+  h-#{$i} {
+    font-weight: 700;
+    font-style: normal;
+  }
+}

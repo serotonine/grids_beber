@@ -1,0 +1,63 @@
+@use "variables" as v;
+@import "base";
+@import "dialog";
+@import "grid";
+
+
+ul.menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  gap: v.gap(xs);
+
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+  }
+}
+
+.flex {
+  display: flex;
+
+  &.flex-centered {
+    align-items: center;
+  }
+
+  &-column {
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+.justify {
+  &-between {
+    justify-content: space-between;
+  }
+}
+
+#global-container {
+  height: 100dvh;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+#header,
+#footer {
+  // background-color: PowderBlue;
+  width: 100%;
+}
+
+#main {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  // background-color: LightBlue;
+}
+
+.container {
+  @media (min-width:768px) {
+    padding: 0 2rem;
+  }
+}
