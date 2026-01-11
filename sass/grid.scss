@@ -1,14 +1,37 @@
 @use "variables" as v;
 
+body.preview{
+  .grid-cell,
+  .grid-cell.merged{
+    background: white;
+  }
+  .grid-cell--tools{
+    display:none;
+  }
+}
+
 #main-container {
-    
   height: 100%;
   display: grid;
   grid-template-columns: repeat(14, minmax(0, 1fr));
   grid-template-rows: repeat(18, minmax(0, 1fr));
   gap: v.gap(s);
   overflow: hidden;
-  background: linear-gradient(to right, white 0% calc(50% - 1px), PaleTurquoise calc(50% - 1px) calc(50% + 1px), white calc(50% + 1px));
+  &.rules-visible{
+  background:
+  linear-gradient(
+    to right,
+    transparent 0% calc(50% - 1px),
+    PaleTurquoise calc(50% - 1px) calc(50% + 1px),
+    transparent calc(50% + 1px)),
+  linear-gradient(to bottom,
+   transparent 0% calc(33% - 1px),
+    PaleTurquoise calc(33% - 1px) calc(33% + 1px),
+    transparent calc(33% + 1px) calc(66.5% - 1px),
+    PaleTurquoise calc(66.5% - 1px) calc(66.5% + 1px),
+    transparent calc(66.5% + 1px));
+
+  }
 
   section.figure-wrapper{
     display: flex;

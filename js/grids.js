@@ -4,16 +4,14 @@ import DOM from "./classes/Dom.js";
 import Dialog from "./classes/Dialog.js";
 import Cell from "./classes/Cell.js";
 // Nb cells.
-let colNb, rowNb, isDialogSectionActive, dragFigure, dom, cell;
-let currentGridArea = [];
-const gridAreas = new Map();
+let  dom, cell;
 
 // SETUP.
 function setUp() {
   dom = new DOM();
   //dialog = new Dialog(dom);
   cell = new Cell(dom);
-  const { sections, dialog, figures, merge } = dom.elements;
+  const { sections, dialog, figures, menu } = dom.elements;
 
   // DRAG & DROP.
   figures.forEach((figure) => {
@@ -62,7 +60,22 @@ function setUp() {
     });
   });
   // HANDLE CELLS
-  merge.addEventListener("click", cell.mergeCells);
+  menu.addEventListener("click", menuHandle);
+  function menuHandle(e){
+    const target = e.target;
+    
+    if(target.classList.contains("btn-merge")){
+      cell.mergeCells();
+    }
+    else if (target.classList.contains("btn-show-grid")){
+      dom.elements.mainContainer.classList.toggle("rules-visible");
+    }
+    else if (target.classList.contains("btn-preview")){
+      dom.elements.body.classList.toggle("preview");
+    }
+
+    else{return;}
+  }
 }
 
 /*

@@ -2,11 +2,13 @@ export default class DOM {
   constructor() {}
   get elements() {
     return {
+      body: document.querySelector("body"),
+      mainContainer: document.getElementById("main-container"),
       grid: document.getElementById("main-container"),
       dialog: document.getElementById("dialog-container"),
       sections: document.querySelectorAll("section.dialog-figure"),
       figures: document.querySelectorAll("section.dialog-figure > figure"),
-      merge: document.querySelector(".btn-merge"),
+      menu: document.querySelector(".main-menu"),
       cells: [],
     };
   }
