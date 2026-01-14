@@ -26,11 +26,6 @@ body.preview {
     transition: border 0.2s ease-out;
     text-align: center;
 
-    &:hover,
-    &.active {
-      border-color: orange;
-    }
-
     &.empty {
       background-color: whitesmoke;
       height: 100px;
@@ -46,6 +41,7 @@ body.preview {
   }
 
   figure {
+    transition: transform 0.2s ease;
     img {
       max-width: 100%;
       max-height: 100%;
@@ -54,6 +50,10 @@ body.preview {
 
     figcaption {
       display: none;
+    }
+    &:hover,
+    &.active {
+      transform: scale(1.05);
     }
   }
 }

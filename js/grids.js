@@ -25,19 +25,15 @@ function setUp() {
     section.addEventListener("dragover", (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = "move";
-      console.log("section dragover", section);
     });
+
     section.addEventListener("drop", (e) => {
   e.preventDefault();
-
   const id = e.dataTransfer.getData("text/plain");
   if (section.dataset.figureId !== id) return;
-
-  section.classList.remove("empty");
-
   const figure = document.querySelector(`figure[data-id="${CSS.escape(id)}"]`);
   if (!figure) return;
-
+section.classList.remove("empty");
   section.prepend(figure);
 
   if (cell.dragFromCell) {
@@ -45,9 +41,10 @@ function setUp() {
     cell.dragFromCell = null;
   }
 });
+
   });
 
-  dialog.addEventListener("click", (e) => {
+  /* dialog.addEventListener("click", (e) => {
     const currentSection = e.target.closest("section.dialog-figure");
     if (!currentSection) {
       return;
@@ -58,7 +55,7 @@ function setUp() {
         ? section.classList.add("active")
         : section.classList.remove("active");
     });
-  });
+  }); */
   // HANDLE CELLS
   menu.addEventListener("click", menuHandle);
   function menuHandle(e){
@@ -77,6 +74,12 @@ function setUp() {
     else{return;}
   }
 }
+document.addEventListener("keyup", (e)=>{
+  if (e.key === "Enter" && e.shiftKey) {
+    e.preventDefault();
+    cell.mergeCells();
+  }
+});
 
 /*
  * @param {xx} xx
@@ -85,12 +88,9 @@ function setUp() {
 function dragStartHandler(e) {
   const figure = e.currentTarget;
 
-  const sectionSource = figure.closest("section.dialog-figure");
   const cellSource = figure.closest(".grid-cell.merged");
-
-  if (sectionSource) sectionSource.classList.add("empty");
-
-  cell.dragFromCell = cellSource ?? null; // reset garanti
+  // Reset.
+  cell.dragFromCell = cellSource ?? null; 
 
   e.dataTransfer.effectAllowed = "move";
   e.dataTransfer.setData("text/plain", figure.dataset.id);

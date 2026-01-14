@@ -2,6 +2,7 @@ export default class Cell {
   constructor(dom) {
     this.dom = dom;
     this.grid = dom.elements.grid;
+    this.dialog = dom.elements.dialog;
     this.gridAreas = new Map();
     this.dragFromCell = null;
   }
@@ -51,11 +52,15 @@ export default class Cell {
     const cellTools = document.createElement("div");
     cellTools.className = "grid-cell--tools";
     cellTools.innerHTML = `
-     <button type="button" class="btn-tool" data-action="delete" title="delete"></button>
-     <button type="button" class="btn-tool" data-action="shrink-top" title="shrink top"></button>
+  <button type="button" class="btn-tool" data-action="align-top" title="align top"></button>
+  <button type="button" class="btn-tool" data-action="align-bottom" title="align bottom"></button>
+  <button type="button" class="btn-tool" data-action="align-left" title="align left"></button>
+  <button type="button" class="btn-tool" data-action="align-right" title="align right"></button>
+  <button type="button" class="btn-tool" data-action="shrink-top" title="shrink top"></button>
   <button type="button" class="btn-tool" data-action="shrink-bottom" title="shrink bottom"></button>
   <button type="button" class="btn-tool" data-action="shrink-left" title="shrink left"></button>
-  <button type="button" class="btn-tool" data-action="shrink-right" title="shrink right"></button>`;
+  <button type="button" class="btn-tool" data-action="shrink-right" title="shrink right"></button>
+  <button type="button" class="btn-tool" data-action="delete" title="delete"></button>`;
 
     return cellTools;
   }
@@ -86,6 +91,13 @@ export default class Cell {
       }
       target.classList.add("filled");
       const id = e.dataTransfer.getData("text/plain");
+      // Set empty for dialog section.
+      const dialogSectionSource = this.dialog.querySelector(
+        `section[data-figure-id="${id}"]`
+      );
+      if (dialogSectionSource) {
+        dialogSectionSource.classList.add("empty");
+      }
       const figure = document.querySelector(`figure[data-id="${id}"]`);
       if (!figure) {
         console.trace("figure could not be dropped, check why...");
@@ -113,12 +125,20 @@ export default class Cell {
       e.preventDefault();
       e.stopPropagation();
       const action = e.target.dataset.action;
+
       if (action === "delete") {
         this.deleteCell(cell);
         this.gridAreas.clear();
         this.clearSelectedUI();
       }
-      this.shrinkCell(cell, action);
+      const actionType = action.split("-");
+      if (actionType[0] === "shrink") {
+        this.shrinkCell(cell, action);
+      }
+      if (actionType[0] === "align") {
+        this.alignCell(cell, action);
+      }
+
       return;
     }
     this.selectCell(cell);
@@ -181,7 +201,7 @@ export default class Cell {
 
     const prev = { minRow, maxRow, minCol, maxCol };
 
-    // Empêcher de shrink en dessous de 1 case
+    // Do not shrink under 1 cell.
     switch (action) {
       case "shrink-top":
         if (minRow < maxRow) minRow += 1;
@@ -199,7 +219,7 @@ export default class Cell {
         return;
     }
 
-    // Rien n’a changé
+    // No change.
     if (
       minRow === prev.minRow &&
       maxRow === prev.maxRow &&
@@ -220,6 +240,36 @@ export default class Cell {
 
     // 3) Update grid-area (end exclusif => +1)
     cell.style.gridArea = `${minRow}/${minCol}/${maxRow + 1}/${maxCol + 1}`;
+  }
+  /*
+   * @param {xx} xx
+   * @return {xx} xx
+   */
+  alignCell(cell, action) {
+    const image = cell.querySelector("img");
+
+    if (!image) {
+      return;
+    }
+    const computedStyle = window.getComputedStyle(image, null);
+    console.log(image.styleSheets);
+    switch (action) {
+      case "align-top":
+        image.style.removeProperty("margin-top");
+        break;
+      case "align-bottom":
+        image.style.marginTop = "auto";
+        break;
+      case "align-left":
+        image.style.removeProperty("margin-left");
+        image.style.marginRight = "auto";
+
+        break;
+      case "align-right":
+        image.style.removeProperty("margin-right");
+        image.style.marginLeft = "auto";
+        break;
+    }
   }
 
   /*
@@ -292,7 +342,6 @@ export default class Cell {
     this.clearSelectedUI();
   };
 
-  
   // Utilities.
   /*
    * @param {HTMLElement} grid
@@ -351,5 +400,4 @@ export default class Cell {
       maxCol: Math.max(...maxCols),
     };
   }
-
 }
