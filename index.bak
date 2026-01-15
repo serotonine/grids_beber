@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Grids for bertrand.segonzac website.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grids for Beber</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div id="global-container" class="flex flex-column">
+      <header id="header">
+        <div class="container flex justify-between flex-centered">
+          <div class="logo">
+            <h1>Grids</h1>
+          </div>
+          <nav class="main-menu flex" aria-label="main menu">
+            <ul class="menu flex">
+              <li>Aute</li>
+              <li>Laborum</li>
+              <li>Voluptate</li>
+              <li>Veniam</li>
+              <li>Amet</li>
+            </ul>
+          </nav>
+
+        </div>
+
+      </header>
+      <main id="main">
+        <article id="main-container" class="container">
+          <section class="figure-wrapper">
+          <figure>
+
+            <img src="./assets/img/racks.jpg" alt="Racks">
+            <figcaption>Racks</figcaption>
+
+          </figure>
+    </section>
+  <section class="figure-wrapper">
+      <figure>
+        <img src="./assets/img/tate-croquette.jpg" alt="The Tate Croquette">
+        <figcaption>The Tate Croquette</figcaption>
+      </figure>
+  </section>
+  <section class="figure-wrapper">
+      <figure>
+        <img src="./assets/img/paysages.jpg" alt="Paysages">
+        <figcaption>Paysages</figcaption>
+      </figure>
+  </section>
+  <section class="figure-wrapper">
+      <figure>
+        <img src="./assets/img/extractions.jpg" alt="Extractions">
+        <figcaption>Extractions</figcaption>
+      </figure>
+  </section>
+   <section class="figure-wrapper">
+      <figure>
+        <img src="./assets/img/emmaus.jpg" alt="Emmaus">
+        <figcaption>Emmaus</figcaption>
+      </figure>
+   </section>
+    </article>
+    </main>
+    <footer id="footer">
+      <article class="container flex flex-centered">
+        <p>footer</p>
+      </article>
+    </footer>
+    </div>
+  </body>
+
+</html>
