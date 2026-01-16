@@ -45,15 +45,14 @@ ul.menu {
 
 #header,
 #footer {
-  // background-color: PowderBlue;
   width: 100%;
+  padding:5px 0;
 }
 
 #main {
   flex: 1 1 auto;
   min-height: 0;
   overflow: hidden;
-  // background-color: LightBlue;
 }
 
 .container {
@@ -61,3 +60,5 @@ ul.menu {
     padding: 0 2rem;
   }
 }
+
+.hidden{display:none;}

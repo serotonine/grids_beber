@@ -69,7 +69,6 @@ body.preview #dialog-figures {
 
 #dialog-container {
   width: 100%;
-  max-height: calc(20% - 1rem);
 }
 #dialog-container section {
   border: 5px solid white;
@@ -88,13 +87,13 @@ body.preview #dialog-figures {
 #dialog-container section > p {
   margin: 0;
   padding: 0;
+  line-height: 0.9em;
 }
 #dialog-container figure {
   transition: transform 0.2s ease;
 }
 #dialog-container figure img {
   max-width: 100%;
-  max-height: 100%;
   object-fit: contain;
 }
 #dialog-container figure figcaption {
@@ -102,6 +101,9 @@ body.preview #dialog-figures {
 }
 #dialog-container figure:hover, #dialog-container figure.active {
   transform: scale(1.05);
+}
+#dialog-container small {
+  font-size: 0.65em;
 }
 
 body.preview .grid-cell,
@@ -292,6 +294,7 @@ ul.menu li {
 #header,
 #footer {
   width: 100%;
+  padding: 5px 0;
 }
 
 #main {
@@ -304,6 +307,10 @@ ul.menu li {
   .container {
     padding: 0 2rem;
   }
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

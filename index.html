@@ -15,8 +15,9 @@
 
   <body class="flex">
         <div id="dialog-figures" >
+             
         <article id="dialog-container">
-          <section class="dialog-figure" data-figure-id="racks" >
+         <!--  <section class="dialog-figure" data-figure-id="racks" >
             <figure draggable="true" data-id="racks">
               <img src="./assets/img/racks.jpg" alt="Racks" draggable="false">
               <figcaption>Racks</figcaption>
@@ -44,14 +45,15 @@
             </figure>
             <p class="dialog-figure--info"><small>Extractions</small></p>
           </section>
-          <section class="dialog-figure" >
+          <section class="dialog-figure" data-figure-id="emmaus">
             <figure draggable="true" data-id="emmaus" >
               <img src="./assets/img/emmaus.jpg" alt="Emmaus" draggable="false">
               <figcaption>Emmaus</figcaption>
             </figure>
             <p class="dialog-figure--info"><small>Emmaus</small></p>
-          </section>
+          </section> -->
         </article>
+     
       </div>
     <div id="global-container" class="flex flex-column">
       <header id="header">
@@ -75,7 +77,10 @@
       </main>
       <footer id="footer">
         <article class="container flex flex-centered">
-          <p>footer</p>
+          <button type="button" class="btn btn-dialog-cta">
+            <span ><small>&#8592;&nbsp;hide dialog</small></span>
+            <span class="hidden"><small>show dialog&nbsp;&#8594;</small></span>
+          </button>
         </article>
       </footer>
     </div>

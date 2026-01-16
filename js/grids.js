@@ -3,97 +3,59 @@
 import DOM from "./classes/Dom.js";
 import Dialog from "./classes/Dialog.js";
 import Cell from "./classes/Cell.js";
+import { fetchImages } from "./fetch.js";
 // Nb cells.
-let  dom, cell;
+let dom, cell, imgHandler;
 
 // SETUP.
 function setUp() {
-  dom = new DOM();
-  //dialog = new Dialog(dom);
-  cell = new Cell(dom);
-  const { sections, dialog, figures, menu } = dom.elements;
-
-  // DRAG & DROP.
-  figures.forEach((figure) => {
-    figure.addEventListener("dragstart", dragStartHandler);
-  });
-  // Populate grid.
-  cell.populateGrid();
-  sections.forEach((section) => {
-    section.childNodes.forEach((node) => node.nodeType == 3 && node.remove());
-
-    section.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "move";
+  // FETCH
+  fetchImages()
+    .then(async (response) => {
+      // Dom.
+      dom = new DOM();
+      const { sections, dialog, figures, menu } = dom.elements;
+      // Populate grid.
+      cell = new Cell(dom);
+      cell.populateGrid();
+      //
+      imgHandler = new Dialog(dom, response);
+      imgHandler.populateDialog();
+      
+      // HANDLE CELLS
+      menu.addEventListener("click", menuHandle);
+      // Show/hide dialog.
+      dom.elements.dialogBtn.addEventListener("click", (e) => {
+        const btn = e.currentTarget;
+        dom.elements.dialogContainer.classList.toggle("hidden");
+        const spans = btn.querySelectorAll("span");
+        spans.forEach((span) => span.classList.toggle("hidden"));
+      });
+      document.addEventListener("keyup", (e) => {
+        if (e.key === "Enter" && e.shiftKey) {
+          e.preventDefault();
+          cell.mergeCells();
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Error: " + error.stack);
     });
+} // end setUp.
 
-    section.addEventListener("drop", (e) => {
-  e.preventDefault();
-  const id = e.dataTransfer.getData("text/plain");
-  if (section.dataset.figureId !== id) return;
-  const figure = document.querySelector(`figure[data-id="${CSS.escape(id)}"]`);
-  if (!figure) return;
-section.classList.remove("empty");
-  section.prepend(figure);
+// Menu Events.
+function menuHandle(e) {
+  const target = e.target;
 
-  if (cell.dragFromCell) {
-    cell.dragFromCell.classList.remove("filled");
-    cell.dragFromCell = null;
-  }
-});
-
-  });
-
-  /* dialog.addEventListener("click", (e) => {
-    const currentSection = e.target.closest("section.dialog-figure");
-    if (!currentSection) {
-      return;
-    }
-    sections.forEach((section) => {
-      // Clean whitespace text nodes sections.
-      section.dataset.figureId === currentSection.dataset.figureId
-        ? section.classList.add("active")
-        : section.classList.remove("active");
-    });
-  }); */
-  // HANDLE CELLS
-  menu.addEventListener("click", menuHandle);
-  function menuHandle(e){
-    const target = e.target;
-    
-    if(target.classList.contains("btn-merge")){
-      cell.mergeCells();
-    }
-    else if (target.classList.contains("btn-show-grid")){
-      dom.elements.mainContainer.classList.toggle("rules-visible");
-    }
-    else if (target.classList.contains("btn-preview")){
-      dom.elements.body.classList.toggle("preview");
-    }
-
-    else{return;}
-  }
-}
-document.addEventListener("keyup", (e)=>{
-  if (e.key === "Enter" && e.shiftKey) {
-    e.preventDefault();
+  if (target.classList.contains("btn-merge")) {
     cell.mergeCells();
+  } else if (target.classList.contains("btn-show-grid")) {
+    dom.elements.mainContainer.classList.toggle("rules-visible");
+  } else if (target.classList.contains("btn-preview")) {
+    dom.elements.body.classList.toggle("preview");
+  } else {
+    return;
   }
-});
-
-/*
- * @param {xx} xx
- * @return {xx} xx
- */
-function dragStartHandler(e) {
-  const figure = e.currentTarget;
-
-  const cellSource = figure.closest(".grid-cell.merged");
-  // Reset.
-  cell.dragFromCell = cellSource ?? null; 
-
-  e.dataTransfer.effectAllowed = "move";
-  e.dataTransfer.setData("text/plain", figure.dataset.id);
 }
 
 // Init.

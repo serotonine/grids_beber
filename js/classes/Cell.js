@@ -252,7 +252,6 @@ export default class Cell {
       return;
     }
     const computedStyle = window.getComputedStyle(image, null);
-    console.log(image.styleSheets);
     switch (action) {
       case "align-top":
         image.style.removeProperty("margin-top");
